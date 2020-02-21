@@ -1,0 +1,31 @@
+{
+  "name": "simple-blog",
+  "version": "1.0.0",
+  "description": "Simple template blog to study Espress, Sequelize and Docker.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec sucrase-node ./src/index.js"
+  },
+  "keywords": [
+    "Blog",
+    "NodeJs",
+    "Express",
+    "Blog Node"
+  ],
+  "author": "Thalyson Rodrigues <thalysonrodrigues.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "express-ejs-layouts": "^2.5.0",
+    "path": "^0.12.7",
+    "sequelize": "^5.21.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "sucrase": "^3.12.1"
+  }
+}
