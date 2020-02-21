@@ -1,5 +1,29 @@
 <%- contentFor('body') %>
 
-<div>
-  <h1>Home</h1>
+<div class="flex">
+  <form action="/login" class="form-login" method="post">
+    <legend>Login now!</legend>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      maxlength="20"
+      placeholder="example@email.com"
+      autofocus
+      required>
+    <br>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      minlength="5"
+      maxlength="12"
+      placeholder="type your password"
+      required>
+    <br>
+    <input
+      type="submit"
+      class="btn-login"
+      value="Sign in">
+  </form>
 </div>
