@@ -7,12 +7,13 @@ const router = Router();
 
 // pages
 router.get('/home', middlewares.session, UserController.index);
+router.get('/posts/:tag', middlewares.session, PostController.index);
 
 // public pages
 router.get('/', (req, res) => res.render('pages/login'));
 router.get('/register', (req, res) => res.render('pages/register'));
-router.get('/blog/:id/:name', (req, res) => res.render('pages/blog'));
-router.get('/blog/:id/:name/posts/:title', (req, res) => res.render('pages/post'));
+router.get('/blog/:id/:tag', (req, res) => res.render('pages/post/show'));
+router.get('/blog/:id/:tag/posts/:title', (req, res) => res.render('pages/post'));
 
 // actions
 router.post('/login', UserController.login);
@@ -21,8 +22,8 @@ router.get('/logout', middlewares.session, UserController.logout);
 router.put('/blog/update-account', middlewares.session, UserController.update);
 router.delete('/blog/delete-account', middlewares.session, UserController.destroy);
 
-router.post('/posts', PostController.store);
-router.put('/posts/update', PostController.update);
-router.delete('/posts/delete', PostController.destroy);
+router.post('/posts', middlewares.session, PostController.store);
+router.put('/posts/update', middlewares.session, PostController.update);
+router.delete('/posts/delete', middlewares.session, PostController.destroy);
 
 export default router;
