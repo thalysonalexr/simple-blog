@@ -13,7 +13,10 @@ class User extends Model {
         beforeCreate: async (user, options) => {
           user.password = await bcrypt.hash(user.password, 10);
           user.tag = user.name.toLowerCase().split(' ').join('-').substring(0, 255);
-        }
+        },
+        beforeSave: (user, options) => {
+          user.tag = user.name.toLowerCase().split(' ').join('-').substring(0, 255);
+        },
       },
       sequelize
     });
@@ -21,6 +24,10 @@ class User extends Model {
 
   async validatePassword (password) {
     return await bcrypt.compare(password, this.password);
+  }
+
+  static associate(models) {
+    this.hasMany(models.Post, { foreignKey: 'author', as: 'posts_author' });
   }
 }
 
