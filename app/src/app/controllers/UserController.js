@@ -7,7 +7,10 @@ export default {
     const { user_id } = req.session;
 
     const user = await User.findByPk(user_id);
-    const loadPosts = await Post.findAll({ where: { author: user.id } });
+    const loadPosts = await Post.findAll({
+      include: { association: 'category_post' },
+      where: { author: user.id }
+    });
 
     const since = moment(user.createdAt).format('DD/MM/YYYY hh:mm:ss');
     const posts = loadPosts.map(post => {
@@ -17,12 +20,39 @@ export default {
         tag,
         title,
         content,
+        category: post.category_post.title,
         createdAt: moment(post.createdAt).format('DD/MM/YYYY hh:mm:ss'),
         updatedAt: moment(post.updatedAt).fromNow()
       }
     });
 
     return res.status(200).render('pages/home', { user, posts, since });
+  },
+
+  async show (req, res) {
+    const { id, tag } = req.params;
+
+    try {
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        return res.status(500).redirect(`/home`);
+      }
+
+      const posts = await Post.findAll({
+        include: { association: 'category_post' },
+        where: {
+          author: id
+        }
+      });
+
+      return res.status(200).render('pages/post/show', { user, posts });
+    } catch(err) {
+      req.flash('blogError', [
+        'Error to load blog.'
+      ]);
+      return res.status(500).redirect(`/blog/${id}/${tag}`);
+    }
   },
 
   async login (req, res) {
