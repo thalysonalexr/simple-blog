@@ -1,10 +1,22 @@
+<%- contentFor('body') %>
+
+<% const messages = getMessages() %>
+
+<% if (messages.updateError) { %>
+  <ul>
+    <% messages.updateError.forEach(error => { %>
+      <li><%= error %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
 <div>
-  Home!
   <a
     class="logout"
     href="/logout">
     Logout
   </a>
+  <!-- update info user -->
   <form action="/blog/update-account?_method=PUT" method="POST">
     <input
       id="name"
@@ -28,6 +40,7 @@
       Update info
     </button>
   </form>
+  <!-- destroy info user -->
   <form action="/blog/delete-account?_method=DELETE" method="POST">
     <button
       type="submit"
@@ -35,4 +48,74 @@
       Delete account
     </button>
   </form>
+  <% if (messages.postSucess) { %>
+    <div>
+      <strong><%= messages.postSucess %></strong>
+    </div>
+  <% } %>
+  <!-- create a new post -->
+  <form action="/posts" method="POST">
+    <input
+      id="title"
+      type="text"
+      name="title"
+      maxlength="255"
+      placeholder="Title of post..."
+      required>
+    <br>
+    <input
+      id="category"
+      type="text"
+      name="category"
+      maxlength="50"
+      placeholder="Category of post"
+      required>
+    <br>
+    <textarea
+      id="content"
+      name="content"
+      placeholder="Write your ideas"
+      cols="30"
+      rows="10"
+      required></textarea>
+    <br>
+    <button
+      type="submit"
+      class="create-post">
+      Create new Post
+    </button>
+  </form>
+  <div>
+    <span>Since <%= since %></span>
+  </div>
+  <% if (posts) { %>
+    <% posts.forEach(post => { %>
+      <div>
+        <strong>
+          <%= post.title %>
+        </strong>
+        <article>
+          <p><%= post.content %></p>
+        </article>
+        <span>
+          <%= post.updatedAt %>
+        </span>
+        <span>
+          <%= post.createdAt %>
+        </span>
+        <a href="/posts/<%= post.tag %>">update post</a>
+        <form action="/posts/delete?_method=DELETE" method="POST">
+          <input
+            name="id"
+            value="<%= post.id %>"
+            type="hidden">
+          <button
+            type="submit"
+            class="remove-post">
+            Delete my post
+          </button>
+        </form>
+      </div>
+    <% }) %>
+  <% } %>
 </div>
