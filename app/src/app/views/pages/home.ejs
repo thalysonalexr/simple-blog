@@ -1,29 +1,38 @@
-<%- contentFor('body') %>
-
-<div class="flex">
-  <form action="/login" class="form-login" method="post">
-    <legend>Login now!</legend>
+<div>
+  Home!
+  <a
+    class="logout"
+    href="/logout">
+    Logout
+  </a>
+  <form action="/blog/update-account?_method=PUT" method="POST">
     <input
-      type="email"
+      id="name"
+      type="text"
+      name="name"
+      maxlength="255"
+      placeholder="type your full name"
+      value="<%= user.name %>"
+      required>
+    <input
       id="email"
+      type="email"
       name="email"
-      maxlength="20"
+      maxlength="255"
       placeholder="example@email.com"
-      autofocus
+      value="<%= user.email %>"
       required>
-    <br>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      minlength="5"
-      maxlength="12"
-      placeholder="type your password"
-      required>
-    <br>
-    <input
+    <button
       type="submit"
-      class="btn-login"
-      value="Sign in">
+      class="update-account">
+      Update info
+    </button>
+  </form>
+  <form action="/blog/delete-account?_method=DELETE" method="POST">
+    <button
+      type="submit"
+      class="remove-account">
+      Delete account
+    </button>
   </form>
 </div>
