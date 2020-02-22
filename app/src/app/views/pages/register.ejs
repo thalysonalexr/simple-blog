@@ -1,0 +1,58 @@
+<%- contentFor('body') %>
+
+<% const messages = getMessages() %>
+
+<% if (messages.registerError) { %>
+<ul>
+  <% messages.registerError.forEach((error) => { %>
+    <li><%= error %></li>
+  <% }) %>
+</ul>
+<% } %>
+
+<div class="flex">
+  <form
+    action="/register"
+    class="form-register"
+    method="post">
+    <legend>Register now!</legend>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      maxlength="255"
+      placeholder="type your full name"
+      autofocus
+      required>
+    <br>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      maxlength="255"
+      placeholder="example@email.com"
+      required>
+    <br>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      minlength="5"
+      maxlength="12"
+      placeholder="type your password"
+      required>
+    <br>
+    <input
+      type="password"
+      id="password-confirmation"
+      minlength="5"
+      maxlength="12"
+      placeholder="confirm your password"
+      required>
+    <br>
+    <input
+      type="submit"
+      class="btn-register"
+      value="Sign Up">
+  </form>
+</div>
