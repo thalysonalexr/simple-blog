@@ -1,12 +1,28 @@
 import User from '../models/User';
+import Post from '../models/Post';
+import moment from 'moment';
 
 export default {
   async index (req, res) {
     const { user_id } = req.session;
 
     const user = await User.findByPk(user_id);
+    const loadPosts = await Post.findAll({ where: { author: user.id } });
 
-    return res.status(200).render('pages/home', { user });
+    const since = moment(user.createdAt).format('DD/MM/YYYY hh:mm:ss');
+    const posts = loadPosts.map(post => {
+      const { id, tag, title, content } = post;
+      return {
+        id,
+        tag,
+        title,
+        content,
+        createdAt: moment(post.createdAt).format('DD/MM/YYYY hh:mm:ss'),
+        updatedAt: moment(post.updatedAt).fromNow()
+      }
+    });
+
+    return res.status(200).render('pages/home', { user, posts, since });
   },
 
   async login (req, res) {
@@ -86,6 +102,15 @@ export default {
     const { name, email } = req.body;
 
     try {
+      const user = await User.findOne({ where: { email } });
+
+      if (user && user.id !== user_id) {
+        req.flash('updateError', [
+          `User already exists to email: ${email}`
+        ]);
+        return res.status(409).redirect('/home');
+      }
+
       await User.update({ name, email }, {
         where: { id: user_id }
       });
