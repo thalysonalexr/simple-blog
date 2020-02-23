@@ -9,7 +9,8 @@ export default {
     const user = await User.findByPk(user_id);
     const loadPosts = await Post.findAll({
       include: { association: 'category_post' },
-      where: { author: user.id }
+      where: { author: user.id },
+      order: ['createdAt']
     });
 
     const since = moment(user.createdAt).format('DD/MM/YYYY hh:mm:ss');
@@ -39,10 +40,21 @@ export default {
         return res.status(500).redirect(`/home`);
       }
 
-      const posts = await Post.findAll({
+      const loadPosts = await Post.findAll({
         include: { association: 'category_post' },
-        where: {
-          author: id
+        where: { author: id }
+      });
+
+      const posts = loadPosts.map(post => {
+        const { id, tag, title, content } = post;
+        return {
+          id,
+          tag,
+          title,
+          content,
+          category: post.category_post.title,
+          createdAt: moment(post.createdAt).format('DD/MM/YYYY hh:mm:ss'),
+          updatedAt: moment(post.updatedAt).fromNow()
         }
       });
 
@@ -132,18 +144,22 @@ export default {
     const { name, email } = req.body;
 
     try {
-      const user = await User.findOne({ where: { email } });
+      const userExists = await User.findOne({ where: { email } });
 
-      if (user && user.id !== user_id) {
+      if (userExists && userExists.id !== user_id) {
         req.flash('updateError', [
           `User already exists to email: ${email}`
         ]);
         return res.status(409).redirect('/home');
       }
 
-      await User.update({ name, email }, {
-        where: { id: user_id }
-      });
+      const user = await User.findByPk(user_id);
+
+      user.name = name;
+      user.email = email;
+      user.tag = name;
+
+      await user.save();
 
       return res.status(200).redirect('/home');
     } catch (err) {
