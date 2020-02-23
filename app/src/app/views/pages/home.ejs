@@ -1,3 +1,7 @@
+<%- contentFor('stylesheet') %>
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/blog.css">
+
 <%- contentFor('body') %>
 
 <% const messages = getMessages() %>
@@ -10,71 +14,75 @@
   </ul>
 <% } %>
 
-<div>
-  <a
-    class="logout"
-    href="/logout">
-    Logout
-  </a>
-  <!-- update info user -->
-  <form action="/blog/update-account?_method=PUT" method="POST">
-    <input
-      id="name"
-      type="text"
-      name="name"
-      maxlength="255"
-      placeholder="type your full name"
-      value="<%= user.name %>"
-      required>
-    <input
-      id="email"
-      type="email"
-      name="email"
-      maxlength="255"
-      placeholder="example@email.com"
-      value="<%= user.email %>"
-      required>
-    <button
-      type="submit"
-      class="update-account">
-      Update info
-    </button>
-  </form>
-  <!-- destroy info user -->
-  <form action="/blog/delete-account?_method=DELETE" method="POST">
-    <button
-      type="submit"
-      class="remove-account">
-      Delete account
-    </button>
-  </form>
+<section class="home">
+  <div class="flex">
+    <!-- update info user -->
+    <form class="update-user" action="/blog/update-account?_method=PUT" method="POST">
+      <input
+        id="name"
+        type="text"
+        name="name"
+        maxlength="255"
+        placeholder="type your full name"
+        value="<%= user.name %>"
+        required>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        maxlength="255"
+        placeholder="example@email.com"
+        value="<%= user.email %>"
+        required>
+      <button
+        type="submit"
+        class="update-account">
+        Update info
+      </button>
+    </form>
+    <div class="since">
+      <span>Author blog here, since <%= since %></span>
+    </div>
+    <div class="logout">
+      <form action="/blog/delete-account?_method=DELETE" method="POST">
+        <button
+          type="submit"
+          class="remove-account">
+          Delete account
+        </button>
+      </form>
+      <a class="logout" href="/logout">Logout</a>
+    </div>
+  </div>
   <% if (messages.postSucess) { %>
     <div>
       <strong><%= messages.postSucess %></strong>
     </div>
   <% } %>
   <!-- create a new post -->
-  <form action="/posts" method="POST">
-    <input
-      id="title"
-      type="text"
-      name="title"
-      maxlength="255"
-      placeholder="Title of post..."
-      required>
-    <br>
-    <input
-      id="category"
-      type="text"
-      name="category"
-      maxlength="50"
-      placeholder="Category of post"
-      required>
+  <form class="create-post" action="/posts" method="POST">
+    <div class="row">
+      <input
+        id="title"
+        type="text"
+        name="title"
+        maxlength="255"
+        placeholder="Title of post..."
+        required>
+      <br>
+      <input
+        id="category"
+        type="text"
+        name="category"
+        maxlength="50"
+        placeholder="Category of post"
+        required>
+    </div>
     <br>
     <textarea
       id="content"
       name="content"
-      placeholder="Write your ideas"
+      placeholder="Write your ideas..."
       cols="30"
       rows="10"
       required></textarea>
@@ -85,37 +93,45 @@
       Create new Post
     </button>
   </form>
-  <div>
-    <span>Since <%= since %></span>
-  </div>
-  <% if (posts) { %>
-    <% posts.forEach(post => { %>
-      <div>
-        <strong>
-          <%= post.title %>
-        </strong>
-        <article>
-          <p><%= post.content %></p>
-        </article>
-        <span>
-          <%= post.updatedAt %>
-        </span>
-        <span>
-          <%= post.createdAt %>
-        </span>
-        <a href="/posts/<%= post.tag %>">update post</a>
-        <form action="/posts/delete?_method=DELETE" method="POST">
-          <input
-            name="id"
-            value="<%= post.id %>"
-            type="hidden">
-          <button
-            type="submit"
-            class="remove-post">
-            Delete my post
-          </button>
-        </form>
-      </div>
-    <% }) %>
-  <% } %>
-</div>
+  <section class="posts">
+    <% if (posts) { %>
+      <% posts.forEach(post => { %>
+        <div class="wrapper">
+          <div class="column">
+            <strong class="title">
+              <%= post.title %>
+            </strong>
+            <span class="category">
+              -- <%= post.category %>
+            </span>
+          </div>
+          <article class="content">
+            <p><%= post.content %></p>
+          </article>
+          <div class="space-between">
+            <span class="updated-at">
+              last updated at <%= post.updatedAt %>
+            </span>
+            <span class="created-at">
+              created at <%= post.createdAt %>
+            </span>
+          </div>
+          <div class="flex">
+            <a class="update-post" href="/posts/<%= post.tag %>">Update my post</a>
+            <form action="/posts/delete?_method=DELETE" method="POST">
+              <input
+                name="id"
+                value="<%= post.id %>"
+                type="hidden">
+              <button
+                type="submit"
+                class="remove-post">
+                Delete my post
+              </button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </section>
+</section>

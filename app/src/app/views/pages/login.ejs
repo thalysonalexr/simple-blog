@@ -1,9 +1,12 @@
+<%- contentFor('stylesheet') %>
+<link rel="stylesheet" href="/css/form.css">
+
 <%- contentFor('body') %>
 
 <% const messages = getMessages() %>
 
 <% if (messages.loginError) { %>
-<ul>
+<ul class="error">
   <% messages.loginError.forEach(error => { %>
     <li><%= error %></li>
   <% }) %>
@@ -36,7 +39,12 @@
     <br>
     <input
       type="submit"
-      class="btn-login"
+      class="btn btn-login"
       value="Sign in">
+    <br>
+    <div class="link">
+      Not have an account yet?&nbsp;
+      <a href="/register">Sign Up</a>
+    </div>
   </form>
 </div>

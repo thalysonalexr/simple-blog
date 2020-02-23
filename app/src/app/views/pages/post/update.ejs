@@ -1,39 +1,49 @@
+<%- contentFor('stylesheet') %>
+<link rel="stylesheet" href="/css/home.css">
+
 <%- contentFor('body') %>
 
-<form action="/posts/update?_method=PUT" method="POST">
-  <input
-    name="id"
-    value="<%= post.id %>"
-    type="hidden">
-  <input
-    id="title"
-    type="text"
-    name="title"
-    maxlength="255"
-    placeholder="Title of post..."
-    value="<%= post.title %>"
-    required>
-  <br>
-  <input
-    id="category"
-    type="text"
-    name="category"
-    maxlength="50"
-    placeholder="Category of post"
-    value="<%= post.category_post.title %>"
-    required>
-  <br>
-  <textarea
-    id="content"
-    name="content"
-    placeholder="Write your ideas"
-    cols="30"
-    rows="10"
-    required><%= post.content %></textarea>
-  <br>
-  <button
-    type="submit"
-    class="create-post">
-    Update my post!
-  </button>
-</form>
+<section class="home">
+  <form class="create-post" action="/posts/update?_method=PUT" method="POST">
+    <input
+      name="id"
+      value="<%= post.id %>"
+      type="hidden">
+    <div class="row">
+      <input
+        id="title"
+        type="text"
+        name="title"
+        maxlength="255"
+        placeholder="Title of post..."
+        value="<%= post.title %>"
+        required>
+      <br>
+      <input
+        id="category"
+        type="text"
+        name="category"
+        maxlength="50"
+        placeholder="Category of post"
+        value="<%= post.category_post.title %>"
+        required>
+    </div>
+    <br>
+    <textarea
+      id="content"
+      name="content"
+      placeholder="Write your ideas..."
+      cols="30"
+      rows="10"
+      required><%= post.content %></textarea>
+    <br>
+    <button
+      type="submit"
+      class="create-post">
+      Update my post!
+    </button>
+  </form>
+  <div class="flex">
+    <a class="link" href="/home">Voltar</a>
+  </div>
+</section>
