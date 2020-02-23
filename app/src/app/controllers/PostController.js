@@ -73,7 +73,7 @@ export default {
       if (!cat)
         cat = await Category.create({ title: category, description: '' });
 
-      const post = await Post.findByPk(parseInt(id));
+      const post = await Post.findByPk(id);
 
       post.title = title;
       post.tag = title;
