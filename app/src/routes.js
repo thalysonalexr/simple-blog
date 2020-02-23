@@ -12,8 +12,7 @@ router.get('/posts/:tag', middlewares.session, PostController.index);
 // public pages
 router.get('/', (req, res) => res.render('pages/login'));
 router.get('/register', (req, res) => res.render('pages/register'));
-router.get('/blog/:id/:tag', (req, res) => res.render('pages/post/show'));
-router.get('/blog/:id/:tag/posts/:title', (req, res) => res.render('pages/post'));
+router.get('/blog/:id/:tag',  UserController.show);
 
 // actions
 router.post('/login', UserController.login);
