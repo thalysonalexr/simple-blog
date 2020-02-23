@@ -1,0 +1,114 @@
+section.home{
+  width: 890px;
+}
+
+.logout{
+  display: flex;
+  flex-direction: column;
+}
+
+.logout a, button.update-account, button.remove-account{
+  color: #f5f5f5;
+  background-color: #4909bd;
+  text-decoration: none;
+  border-radius: 2vh;
+  box-shadow: 1px 2px 1px 1px rgba(44, 62, 80, 0.2);
+  padding: 1vh 2vh;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: center;
+}
+
+button.remove-account{ background-color: #d93838; }
+
+a.logout{ margin-top: 1vh; }
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2vh;
+}
+
+form.update-user > input, .row > input{
+  font-size: 14px;
+  padding: 1vh 2vh;
+  border-radius: 2vh;
+  border: 1px solid rgba(44, 62, 80, 0.2);
+  box-shadow: 1px 2px 1px 1px rgba(44, 62, 80, 0.2);
+  margin-bottom: 2vh;
+}
+
+form.update-user > input:first-child{
+  width: 330px;
+}
+
+.row{
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+form.create-post{
+  margin-top: 2vh;
+  padding: 3vh;
+  border-radius: 2vh;
+  background-color: #4909bd!important;
+  margin-bottom: 2vh;
+}
+
+form.create-post .row > input:first-child{
+  width: 100%;
+  margin-right: 1vh;
+}
+
+form.create-post .row > input:last-child{
+  width: 350px;
+}
+
+textarea{
+  width: 100%;
+  height: 200px;
+  border-radius: 2vh;
+  padding: 2vh;
+  font-size: 1rem;
+}
+
+button.create-post{
+  padding: 2vh;
+  font-size: 1rem;
+  border-radius: 2vh;
+  background-color: #15b345;
+  color: #f5f5f5;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.since span{
+  color: #f5f5f5;
+  font-size: 12px;
+  font-style: italic;
+}
+
+button.remove-post, a.update-post{
+  padding: 1vh 2vh;
+  color: #f5f5f5;
+  border-radius: 2vh;
+  box-shadow: 1px 1px 1px 1px rgba(44, 62, 80, 0.2);
+  cursor: pointer;
+  margin-top: 2vh;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+button.remove-post{
+  background-color: #d93838;
+}
+
+a.update-post{
+  background-color: #4909bd;
+}
+
+.link{
+  color: #f5f5f5;
+}
